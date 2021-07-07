@@ -21,6 +21,7 @@ let package = Package(
         .library(name: "RosTime", targets: ["RosTime"]),
         .library(name: "RosMaster", targets: ["rosmaster"]),
         .library(name: "RosNetwork", targets: ["RosNetwork"]),
+        .library(name: "roscoreLib", targets: ["roscoreLib"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.27.0"),
@@ -86,6 +87,10 @@ let package = Package(
             .target(name: "rpcobject")]),
         .target(name: "rosparam", dependencies: ["RosSwift"]),
         .testTarget(name: "rosmasterTests", dependencies: ["roscore"]),
+        .target(name: "launcher", dependencies: ["roscoreLib"]),
+        .target(name: "roscoreLib", dependencies: [
+            "rosmaster", "RosNetwork",
+            .product(name: "Logging", package: "swift-log")])
 
     ]
 )
